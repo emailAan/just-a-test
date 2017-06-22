@@ -4,7 +4,7 @@
   "description": "Prototype for an Impulse App",
   "repository": {
     "type": "git",
-    "url": "https://github.com/justbrody/react-impulse-app.git"
+    "url": "https://github.com/justbrody/emp-app.git"
   },
   "keywords": [
     "react",
@@ -21,7 +21,7 @@
   ],
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/justbrody/react-impulse-app/issues"
+    "url": "https://github.com/justbrody/emp-app.git/issues"
   },
   "enviroments": {
     "__DEV__": {
@@ -37,7 +37,7 @@
       "__DEVTOOLS__": true
     }
   },
-  "homepage": "https://github.com/justbrody/react-impulse-ap#readme",
+  "homepage": "https://github.com/justbrody/emp-app.git#readme",
   "dependencies": {
     "sanitize.css": "^5.0.0"
   },
