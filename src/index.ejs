@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>CounterTile app</title>
+  <% if(__CORDOVA__) { %><script src="cordova.js"></script><% } %>
+</head>
+<body>
+  <div id="app">
+    <%= htmlWebpackPlugin.options.getAppContent() %>
+  </div>
+</body>
+</html>

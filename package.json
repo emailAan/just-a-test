@@ -1,0 +1,119 @@
+{
+  "name": "com.impulse.test.app.android",
+  "version": "0.0.1",
+  "description": "Prototype for an Impulse App",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/justbrody/react-impulse-app.git"
+  },
+  "keywords": [
+    "react",
+    "reactjs",
+    "hot",
+    "reload",
+    "hmr",
+    "live",
+    "edit",
+    "webpack",
+    "flux",
+    "redux",
+    "todomvc"
+  ],
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/justbrody/react-impulse-app/issues"
+  },
+  "enviroments": {
+    "__DEV__": {
+      "__SSR__": false,
+      "__DEVTOOLS__": true
+    },
+    "__PROD__": {
+      "__SSR__": true,
+      "__DEVTOOLS__": false
+    },
+    "__CORDOVA__": {
+      "__SSR__": true,
+      "__DEVTOOLS__": true
+    }
+  },
+  "homepage": "https://github.com/justbrody/react-impulse-ap#readme",
+  "dependencies": {
+    "sanitize.css": "^5.0.0"
+  },
+  "devDependencies": {
+    "autoprefixer": "^6.3.7",
+    "autoprefixer-loader": "^3.2.0",
+    "babel-core": "^6.11.4",
+    "babel-eslint": "^6.1.2",
+    "babel-loader": "^6.2.4",
+    "babel-plugin-transform-decorators-legacy": "^1.3.4",
+    "babel-polyfill": "^6.23.0",
+    "babel-preset-es2015": "^6.9.0",
+    "babel-preset-react": "^6.11.1",
+    "babel-preset-react-hmre": "^1.1.1",
+    "babel-preset-stage-0": "^6.5.0",
+    "babel-runtime": "^6.9.2",
+    "classnames": "^2.2.5",
+    "cross-env": "^2.0.0",
+    "css-loader": "^0.23.1",
+    "deasync": "^0.1.7",
+    "eslint": "^2.13.1",
+    "eslint-config-airbnb": "^9.0.1",
+    "eslint-loader": "^1.4.1",
+    "eslint-plugin-import": "^1.12.0",
+    "eslint-plugin-jsx-a11y": "^1.5.5",
+    "eslint-plugin-react": "^5.2.2",
+    "extract-text-webpack-plugin": "^1.0.1",
+    "fetch": "^1.1.0",
+    "file-loader": "^0.9.0",
+    "html-webpack-plugin": "^2.22.0",
+    "imports-loader": "^0.6.5",
+    "install": "^0.8.1",
+    "jasmine": "^2.4.1",
+    "jasmine-core": "^2.4.1",
+    "karma": "^1.1.2",
+    "karma-jasmine": "^1.0.2",
+    "karma-phantomjs-launcher": "^1.0.1",
+    "karma-phantomjs-shim": "^1.4.0",
+    "karma-webpack": "^1.7.0",
+    "memory-fs": "^0.3.0",
+    "node-libs-browser": "^1.0.0",
+    "node-sass": "^3.8.0",
+    "onsenui": "^2.1.0",
+    "phantomjs": "^2.1.7",
+    "radium": "^0.18.1",
+    "raw-loader": "^0.5.1",
+    "react": "15.4",
+    "react-dom": "15.4",
+    "react-onsenui": "^1.1.0",
+    "react-redux": "^4.4.5",
+    "react-tap-event-plugin": "^2.0.1",
+    "redux": "^3.5.2",
+    "redux-devtools": "^3.3.1",
+    "redux-devtools-dock-monitor": "^1.1.1",
+    "redux-devtools-log-monitor": "^1.0.11",
+    "redux-saga": "^0.15.3",
+    "require-from-string": "^1.2.0",
+    "reselect": "^3.0.0",
+    "sass-loader": "^4.0.0",
+    "standard": "^10.0.2",
+    "style-loader": "^0.13.1",
+    "styled-components": "^2.1.0",
+    "superagent": "^3.5.2",
+    "url-loader": "^0.5.7",
+    "webpack": "^1.13.1",
+    "webpack-dev-server": "^1.14.1"
+  },
+  "scripts": {
+    "build": "webpack --progress",
+    "build:prod": "cross-env NODE_ENV=production npm run build",
+    "build:cordova": "cross-env NODE_ENV=production cross-env BUILD_TARGET=cordova npm run build",
+    "start": "webpack-dev-server --port 3000 --host 0.0.0.0 --inline --hot  --progress --colors ",
+    "start:prod": "cross-env NODE_ENV=production npm run start",
+    "lint": "eslint --ext .js,.jsx .",
+    "test": "cross-env NODE_ENV=production karma start",
+    "predeploy": "npm run build:cordova",
+    "deploy": "git add -f www/ && node ./bin/bump.js && git checkout gh-pages && git merge master && git checkout master && git push --tags && npm publish && git push origin master gh-pages"
+  }
+}

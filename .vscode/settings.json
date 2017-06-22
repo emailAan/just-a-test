@@ -1,0 +1,17 @@
+{
+    "typescript.tsdk": "./node_modules/typescript/lib",
+    "javascript.validate.enable": false,
+    "standard.options": {
+        "globals": [
+            "$",
+            "jQuery",
+            "fetch"
+        ],
+        "ignore": [
+            "node_modules/**"
+        ],
+        "parser": "babel-eslint"
+    },
+    "standard.autoFixOnSave": true,
+    "editor.renderWhitespace": "all",
+}
