@@ -2,26 +2,25 @@ import request from 'superagent'
 import ons from 'onsenui'
 
 import store from '../stores/app-store'
-import {isUndefined} from './utils'
 
 let ImpPushNotification = (function () {
   let debug = false
-  let storeTokenApiUrl = store.getState().settings.endPoint + '/gcm/keys'
+  const storeTokenApiUrl = `${store.getState().settings.endPoint}/gcm/keys`
 
-  let log = (msg) => { if (debug) console.log(msg) }
+  const log = (msg) => { if (debug) console.log(msg) }
 
-  let alert = (title, message) => {
+  const alert = (title, message) => {
     ons.notification.alert({ title, message })
   }
 
-  let errorHandler = (err) => {
+  const errorHandler = (err) => {
     if (debug) {
       alert(err)
       log(err)
     }
   }
 
-  let storeToken = (token, user) => {
+  const storeToken = (token, user) => {
     request
             .post(storeTokenApiUrl)
             .send({ key: token, user: user, uuid: device.uuid })
@@ -33,7 +32,7 @@ let ImpPushNotification = (function () {
             })
   }
 
-  let getTokenFromFCM = () => {
+  const getTokenFromFCM = () => {
     FCMPlugin.getToken(
         function (token) {
           if (token == null) {
@@ -49,7 +48,7 @@ let ImpPushNotification = (function () {
     )
   }
 
-  let enabledNotificationInApp = () => {
+  const enabledNotificationInApp = () => {
     if (typeof (FCMPlugin) !== 'undefined') {
       FCMPlugin.onNotification(function (data) {
         if (data.wasTapped) {
@@ -63,13 +62,13 @@ let ImpPushNotification = (function () {
     }
   }
 
-  let disabledNotificationInApp = () => {
+  const disabledNotificationInApp = () => {
     if (typeof (FCMPlugin) !== 'undefined') {
       FCMPlugin.onNotification(() => null)
     }
   }
 
-  let init = () => {
+  const init = () => {
     if (typeof (FCMPlugin) !== 'undefined') {
       getTokenFromFCM()
       enabledNotificationInApp()
@@ -79,11 +78,7 @@ let ImpPushNotification = (function () {
     }
   }
 
-  document.addEventListener('deviceready', onDeviceReady, false)
-  function onDeviceReady () {
-    console.log(device.cordova)
-    init()
-  }
+  document.addEventListener('deviceready', init, false)
 
   return {
     enable: enabledNotificationInApp,

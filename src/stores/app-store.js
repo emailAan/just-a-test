@@ -1,16 +1,20 @@
 import { createStore, applyMiddleware } from 'redux'
 import createSagaMiddleware from 'redux-saga'
+import throttle from 'lodash/throttle'
 
-import dataService from '../services/data-service'
-import counterService from '../services/counter-service'
 import logger from '../services/logger-service'
-import medewerkerSaga from '../services/medewerker-saga'
+import { rootSaga } from '../services'
 import rootReducer from '../reducers'
+import { loadState, saveState } from './localStorage'
+
+const persistedState = loadState()
 
 const sagaMiddleware = createSagaMiddleware()
 
-const store = createStore(rootReducer, applyMiddleware(sagaMiddleware, dataService, counterService, logger))
+const store = createStore(rootReducer, persistedState, applyMiddleware(sagaMiddleware, logger))
 
-sagaMiddleware.run(medewerkerSaga)
+store.subscribe(throttle(() => saveState(store.getState()), 1000))
+
+sagaMiddleware.run(rootSaga)
 
 export default store

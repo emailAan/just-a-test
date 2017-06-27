@@ -1,4 +1,2 @@
 
-export let isUndefined = (object) => (typeof (object) === "undefined")
-
-
+export let isUndefined = (object) => (typeof (object) === 'undefined')

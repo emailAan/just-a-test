@@ -6,7 +6,7 @@ import 'babel-polyfill'
 import 'core-js/fn/object/assign'
 import 'sanitize.css/sanitize.css'
 
-import App from '../containers/App.jsx'
+import App from '../containers/App'
 
 injectTapEventPlugin()
 

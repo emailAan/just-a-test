@@ -1,14 +1,15 @@
 import { call, put, takeEvery, select } from 'redux-saga/effects'
-import Api from '../api/Api'
-import setMedewerkers from '../actions/set-medewerkers'
-import {MEDEWERKERS_FETCH_BEGIN, MEDEWERKERS_FETCH_ERROR} from '../constants/MedewerkerActionTypes'
-import {getEndPoint} from '../selectors'
+
+import {fetchMedewerkers} from '../api'
+import {setMedewerkers} from '../containers/Medewerkers/actions'
+import {MEDEWERKERS_FETCH_BEGIN, MEDEWERKERS_FETCH_ERROR} from '../containers/Medewerkers/constants'
+import {getEndPoint} from '../reducers'
 
 function * fetchMedewerkersWorker (action) {
   try {
     let endPoint = yield select(getEndPoint)
 
-    const medewerkers = yield call(Api.fetchMedewerkers, endPoint)
+    const medewerkers = yield call(fetchMedewerkers, endPoint)
 
     yield put(setMedewerkers(medewerkers))
   } catch (e) {
@@ -16,8 +17,8 @@ function * fetchMedewerkersWorker (action) {
   }
 }
 
-function * fetchMedewerkers () {
+function * fetchMedewerkersWatcher () {
   yield takeEvery(MEDEWERKERS_FETCH_BEGIN, fetchMedewerkersWorker)
 }
 
-export default fetchMedewerkers
+export default fetchMedewerkersWatcher

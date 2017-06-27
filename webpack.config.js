@@ -1,28 +1,28 @@
-'use strict';
+'use strict'
 
-const webpack = require('webpack');
-const path = require('path');
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-const requireFromString = require('require-from-string');
-const MemoryFS = require('memory-fs');
-const deasync = require('deasync');
+const webpack = require('webpack')
+const path = require('path')
+const ExtractTextPlugin = require('extract-text-webpack-plugin')
+const HtmlWebpackPlugin = require('html-webpack-plugin')
+const requireFromString = require('require-from-string')
+const MemoryFS = require('memory-fs')
+const deasync = require('deasync')
 
-const __PROD__ = process.env.NODE_ENV === 'production';
-const __CORDOVA__ = process.env.BUILD_TARGET === 'cordova';
-const __DEV__ = __PROD__ === false;
+const __PROD__ = process.env.NODE_ENV === 'production'
+const __CORDOVA__ = process.env.BUILD_TARGET === 'cordova'
+const __DEV__ = __PROD__ === false
 
-const packageFile = require('./package.json');
+const packageFile = require('./package.json')
 
 // Take cordova enviroment, if not prod, if not dev
 const enviroment = packageFile.enviroments[
   (__CORDOVA__ && '__CORDOVA__') ||
   (__PROD__ && '__PROD__') ||
   (__DEV__ && '__DEV__')
-];
+]
 
-const __SSR__ = enviroment.__SSR__;
-const __DEVTOOLS__ = enviroment.__DEVTOOLS__;
+const __SSR__ = enviroment.__SSR__
+const __DEVTOOLS__ = enviroment.__DEVTOOLS__
 
 const define = {
   __DEV__: JSON.stringify(__DEV__),
@@ -33,9 +33,9 @@ const define = {
   __CORDOVA__: JSON.stringify(__CORDOVA__),
   __SSR__: JSON.stringify(__SSR__),
   __DEVTOOLS__: JSON.stringify(__DEVTOOLS__)
-};
+}
 
-let getServerString = undefined;
+let getServerString;
 const webpackConfig = {
   devtool: __DEV__ ? 'source-map' : false,
   entry: {
@@ -77,7 +77,12 @@ const webpackConfig = {
         loader: 'babel',
         query: {
           plugins: ['transform-decorators-legacy' ],
-          presets: ['es2015', 'stage-0']
+          presets: ['es2015', 'stage-0', 'react'],
+          env: {
+            development: {
+              presets: ['react-hmre']
+            }
+          }
         }
       },
       {
@@ -96,8 +101,8 @@ const webpackConfig = {
       },
       {
         test: /\.(scss|css)$/,
-    loaders: [ 'style', 'css'],
-    include: __dirname
+        loaders: [ 'style', 'css'],
+        include: __dirname
        /* loader: __PROD__ ? ExtractTextPlugin.extract(
           'style',
           'css?modules&importLoaders=2&sourceMap!autoprefixer?browsers=last 2 version!sass?outputStyle=expanded&sourceMap=true&sourceMapContents=true'
@@ -116,10 +121,10 @@ const webpackConfig = {
       }
     ]
   }
-};
+}
 
 getServerString = () => {
-  const fs = new MemoryFS();
+  const fs = new MemoryFS()
 
   const compiler = webpack(Object.assign(webpackConfig, {
     entry: './src/entry-points/Server.jsx',
@@ -130,15 +135,15 @@ getServerString = () => {
     },
     module: Object.assign(webpackConfig.module, {
       loaders: webpackConfig.module.loaders.map(loaderObj => {
-        let returnedLoaderObj;
+        let returnedLoaderObj
         if (loaderObj.test.toString() === /\.(scss|css)$/.toString()) {
           returnedLoaderObj = Object.assign(loaderObj, {
             loader: 'css?modules&importLoaders=2&sourceMap&localIdentName=[local]___[hash:base64:5]!sass'
-          });
+          })
         } else {
-          returnedLoaderObj = loaderObj;
+          returnedLoaderObj = loaderObj
         }
-        return returnedLoaderObj;
+        return returnedLoaderObj
       })
     }),
     plugins: [
@@ -147,26 +152,26 @@ getServerString = () => {
         __SERVER__: JSON.stringify(true)
       }))
     ]
-  }));
+  }))
 
-  let sync = true;
-  let data = null;
-  compiler.outputFileSystem = fs;
+  let sync = true
+  let data = null
+  compiler.outputFileSystem = fs
   compiler.run(err => {
     if (err) {
-      throw err;
+      throw err
     }
-    const fileContent = fs.readFileSync('/bundle.js').toString('utf-8');
+    const fileContent = fs.readFileSync('/bundle.js').toString('utf-8')
     // Using eval because we can't require from `memory-fs`
-    data = requireFromString(fileContent);
-    sync = false;
-  });
+    data = requireFromString(fileContent)
+    sync = false
+  })
 
   while (sync) {
-    deasync.sleep(100);
+    deasync.sleep(100)
   }
 
-  return data;
+  return data
 };
 
-module.exports = webpackConfig;
+module.exports = webpackConfig
