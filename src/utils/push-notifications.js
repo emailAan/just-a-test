@@ -1,11 +1,10 @@
-import request from 'superagent'
 import ons from 'onsenui'
 
 import store from '../stores/app-store'
+import {storeToken} from '../api'
 
 let ImpPushNotification = (function () {
   let debug = false
-  const storeTokenApiUrl = `${store.getState().settings.endPoint}/gcm/keys`
 
   const log = (msg) => { if (debug) console.log(msg) }
 
@@ -20,18 +19,6 @@ let ImpPushNotification = (function () {
     }
   }
 
-  const storeToken = (token, user) => {
-    request
-            .post(storeTokenApiUrl)
-            .send({ key: token, user: user, uuid: device.uuid })
-            .set('Accept', 'application/json')
-            .end(function (err, res) {
-              if (err || !res.ok) {
-                errorHandler('Error during initializing the push notifications/')
-              }
-            })
-  }
-
   const getTokenFromFCM = () => {
     FCMPlugin.getToken(
         function (token) {
@@ -39,7 +26,9 @@ let ImpPushNotification = (function () {
             setTimeout(getTokenFromFCM, 1000)
           } else {
             log('I got the token: ' + token)
-            storeToken(token, 'brody')
+            let tokenData = { key: token, user: 'brody', uuid: device.uuid }
+            storeToken(store.getState().settings.endPoint, tokenData).catch((e) =>
+               errorHandler('Error during initializing the push notifications/'))
           }
         },
         function (err) {
