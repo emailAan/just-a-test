@@ -65,9 +65,7 @@ class Medewerkerlist extends React.Component {
   }
 
   componentWillMount () {
-    if (this.props.medewerkers.length === 0) {
-      this.props.dataFetch()
-    }
+    this.props.dataFetch()
   }
 }
 

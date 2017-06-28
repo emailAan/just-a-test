@@ -1,1 +1,2 @@
 export const SET_ENDPOINT = 'SET_ENDPOINT'
+export const SET_DEFAULT_PAGE = 'SET_DEFAULT_PAGE'

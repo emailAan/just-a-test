@@ -20,7 +20,7 @@ var Component = ({user}) => <span>{`hello${user}`}</span>
 ```
 
 Location components: src/components
-The components directory should have an index.js in which all components should be listed
+All components should have it's one directory, the index.js file should contain/export the component. The components directory should have an index.js in which all components should be exported.
 
 ### Container
 example of a container:
@@ -41,8 +41,6 @@ class Container extends React.Component {
   }
 }
 ```
-
-
 
 Location containers: src/containers
 Every container should have it's own directory in which the following files can be present:
