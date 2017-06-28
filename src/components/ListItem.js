@@ -1,7 +1,7 @@
 import React from 'react'
 import { ListItem } from 'react-onsenui'
 
-import { Left, Center, Right } from '../components'
+import { Left, Center, Right } from './Alignment'
 
 const CustomListItem = ({leftChildren, rightChildren, centerChildren, index, id, onClick}) => (
   <div>

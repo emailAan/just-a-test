@@ -5,7 +5,9 @@ import styled from 'styled-components'
 
 import { selectMedewerker, getMedewerkersFromApi } from './actions'
 import { getFilteredMedewerkers, getMedewerkersQuickList } from './selectors'
-import { RoundedImage, ListItem, List } from '../../components'
+import List  from '../../components/List'
+import RoundedImage  from '../../components/RoundedImage'
+import ListItem  from '../../components/ListItem'
 
 const CenterParagraph = styled.div`margin: '0px'`
 const ParagraphItem = styled.p`

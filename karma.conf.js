@@ -9,7 +9,7 @@ delete webpackConfig.output
 module.exports = function karmaConfig (config) {
   config.set({
     // ... normal karma configuration
-    browsers: ['Firefox', 'Chrome', 'ChromeHeadless'],
+    browsers: [/*'Firefox', 'Chrome',*/ 'ChromeHeadless'],
     customLaunchers: {
       ChromeHeadless: {
         base: 'Chrome',
@@ -34,7 +34,7 @@ module.exports = function karmaConfig (config) {
       // add webpack as preprocessor
       'src/__tests__/**/*': ['webpack']
     },
-    frameworks: ['phantomjs-shim', 'jasmine'],
+    frameworks: ['jasmine'],
     webpack: webpackConfig,
     webpackMiddleware: {
       noInfo: true
